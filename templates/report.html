@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+
+div.container {
+    width: 100%;
+}
+
+header {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: center;
+}
+
+profrankcol {
+    width: auto;
+    font-size: 150%;
+}
+
+
+timecommitcol {
+    margin-left: 100px;
+    overflow: hidden;
+    width: auto;
+    font-size: 130%;
+}
+
+timecommitcol h3 {
+  color: #{{time_color|safe}};
+}
+
+gradeexpectedcol {
+    margin-left: 100px;
+    overflow: hidden;
+    width: auto;
+    font-size: 130%;
+}
+
+gradeexpectedcol h3 {
+  color: #{{grade_color|safe}};
+  font-size: 130%;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+   <h1>{{code}}</h1>
+</header>
+
+<profrankcol>
+  <h2>Best Professors</h2>
+  <p>{{rank|safe}}</p>
+</profrankcol>
+
+<timecommitcol>
+  <h2>Time Commitment</h2>
+  <h3>{{hours}} hours per week</h3>
+  <p>{{time_statement}}</p>
+</timecommitcol>
+
+<gradeexpectedcol>
+  <h2>Expected Grade</h2>
+  <h3>{{expected_grade}}</h3>
+  <p>{{grade_statement}}</p>
+</gradeexpectedcol>
+
+</div>
+
+</body>
+</html>
