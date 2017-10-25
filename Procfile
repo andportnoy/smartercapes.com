@@ -1,2 +1,2 @@
-web: python3 server.py
+web: sudo python3 server.py
 
