@@ -19,7 +19,7 @@ print('url_dict loaded')
 
 @app.route("/")
 def hello():
-    return render_template("home.html", course_list=course_list, url_dict=url_dict)
+    return render_template("home.html", url_dict=url_dict)
 
 @app.route("/<dept>/<course>")
 def welcome(dept, course):
