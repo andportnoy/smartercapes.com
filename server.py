@@ -3,25 +3,22 @@ import os
 import json
 app = Flask(__name__)
 
-def load_json():
-    with open('ranking.json') as f:
-        ranking = json.load(f)
-    with open('time.json') as f:
-        time = json.load(f)
-    with open('grade.json') as f:
-        grade = json.load(f)
-    return ranking, time, grade
+# load our data dictionaries
+with open('ranking.json') as f:
+    ranking = json.load(f)
+with open('time.json') as f:
+    time = json.load(f)
+with open('grade.json') as f:
+    grade = json.load(f)
+print('json loaded')
 
-ranking, time, grade = load_json()
-print('Loaded json')
-
-def make_url_dict(course_list):
-    return {item: '/'.join(item.lower().split(' ')) for item in course_list} 
+# load the course and build a dictionary of the form d: 'ECE 35' -> 'ece/35'
+course_list = sorted(ranking.keys())
+url_dict = {item: '/'.join(item.lower().split(' ')) for item in course_list} 
+print('url_dict loaded')
 
 @app.route("/")
 def hello():
-    course_list = sorted(ranking.keys())
-    url_dict = make_url_dict(course_list)
     return render_template("home.html", course_list=course_list, url_dict=url_dict)
 
 @app.route("/<dept>/<course>")
