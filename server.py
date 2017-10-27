@@ -19,7 +19,7 @@ print('url_dict loaded')
 
 @app.route("/")
 def hello():
-    return render_template("home.html")
+    return render_template("home.html", url_dict=url_dict)
 
 @app.route("/<dept>/<course>")
 def welcome(dept, course):
@@ -36,7 +36,7 @@ def welcome(dept, course):
     except KeyError:
         return render_template('nodata.html', code=code)
 
-    return render_template("report.html", code=code, rank=rank,
+    return render_template("report.html", url_dict=url_dict, code=code, rank=rank,
         hours=hours, time_color=time_color, time_statement=time_statement,
         expected_grade=expected_grade, grade_color=grade_color, grade_statement=grade_statement)
 
