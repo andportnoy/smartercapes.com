@@ -57,7 +57,7 @@ gradeexpectedcol h3 {
 <h2>You can choose a different course:</h2>
 <select onchange="location = this.options[this.selectedIndex].value;">
     <option>Select...</option>
-    {% for course in course_list %}
+    {% for course in url_dict %}
         <option value="{{url_dict[course]}}">{{course}}</option>
     {% endfor %}
 </select>
