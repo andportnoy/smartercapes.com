@@ -16,16 +16,7 @@ ranking, time, grade = load_json()
 print('Loaded json')
 
 def make_url_dict(course_list):
-    url_dict = {}
-    for course_code in course_list:
-        course_code = str(course_code)
-        temp_list = course_code.split(" ")
-        dept_code = temp_list[0]
-        dept_code = dept_code.lower()
-        course_num = temp_list[1]
-        url = dept_code+"/"+course_num
-        url_dict[course_code] = url
-    return url_dict
+    return {item: '/'.join(item.lower().split(' ')) for item in course_list} 
 
 @app.route("/")
 def hello():
