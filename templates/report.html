@@ -54,6 +54,14 @@ gradeexpectedcol h3 {
    <h1>{{code}}</h1>
 </header>
 
+<h2>You can choose a different course:</h2>
+<select onchange="location = this.options[this.selectedIndex].value;">
+    <option>Select...</option>
+    {% for course in url_dict %}
+        <option value="{{url_dict[course]}}">{{course}}</option>
+    {% endfor %}
+</select>
+
 <profrankcol>
   <h2>Best Professors</h2>
   <p>{{rank|safe}}</p>
