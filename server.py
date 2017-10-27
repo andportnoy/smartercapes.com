@@ -51,11 +51,7 @@ def welcome(dept, course):
     return render_template("report.html", code=code, rank=rank,
         hours=hours, time_color=time_color, time_statement=time_statement,
         expected_grade=expected_grade, grade_color=grade_color, grade_statement=grade_statement)
-<<<<<<< HEAD
-    
+
 port = int(os.environ.get("PORT", 5000))
 app.run(host='0.0.0.0', port=port)
-=======
 
-app.run(host='0.0.0.0', port=80)
->>>>>>> single_dropdown
