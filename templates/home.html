@@ -34,7 +34,7 @@ instructions {
   <h2>Please select a course from the dropdown:</h2>
 <select onchange="location = this.options[this.selectedIndex].value;">
     <option>Select...</option>
-    {% for course in course_list %}
+    {% for course in url_dict %}
         <option value="{{url_dict[course]}}">{{course}}</option>
     {% endfor %}
 </select>
