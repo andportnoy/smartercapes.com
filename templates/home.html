@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../static/w3.css">
+
 <body>
 
-<div class="container">
+    <div class="w3-container w3-light-gray">
+        <h1>Welcome to esCAPE!</h1>
+    </div>
 
-<header>
-   <h1>Welcome to esCAPE!</h1>
-</header>
+    <div class="w3-container">
+        <h2>Please select a course from the dropdown:</h2>
+        <select onchange="location = this.options[this.selectedIndex].value;">
+            <option>Select...</option>
+            {% for course in url_dict %}
+                <option value="{{url_dict[course]}}">{{course}}</option>
+            {% endfor %}
+        </select>
+    </div>
 
-<instruction>
-  <h2>Please select a course from the dropdown:</h2>
-<select onchange="location = this.options[this.selectedIndex].value;">
-    <option>Select...</option>
-    {% for course in url_dict %}
-        <option value="{{url_dict[course]}}">{{course}}</option>
-    {% endfor %}
-</select>
-</instruction>
-
-</div>
+    </div>
 
 </body>
 </html>
