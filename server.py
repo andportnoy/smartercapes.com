@@ -56,8 +56,9 @@ def welcome(dept, course):
     except KeyError:
         return render_template('nodata.html', code=code)
 
-    return render_template("report.html", url_dict=url_dict, code=code,
-                           time_panel=time_panel, grade_panel=grade_panel)
+    return render_template("report.html", url_dict=url_dict, 
+                           code=code, rank=rank, time_panel=time_panel, 
+                           grade_panel=grade_panel)
 
 port = int(os.environ.get("PORT", 5000))
 app.run(host='0.0.0.0', port=port)
