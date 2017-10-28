@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import os
 import json
+from natsort import natsorted # natural sorting module
 app = Flask(__name__)
 
 # load our data dictionaries
@@ -13,7 +14,7 @@ with open('grade.json') as f:
 print('json loaded')
 
 # load the course and build a dictionary of the form d: 'ECE 35' -> 'ece/35'
-courses = sorted(ranking.keys())
+courses = natsorted(ranking.keys())
 url_dict = {i: '/' + '/'.join(i.lower().split(' ')) for i in courses} 
 print('url_dict loaded')
 
