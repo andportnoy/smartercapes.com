@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="w3.css">
 
 <body>
-<div class="container">
 
 <header>
    <h1>{{code}}</h1>
@@ -17,23 +16,23 @@
         <option value="{{url_dict[course]}}">{{course}}</option>
     {% endfor %}
 </select>
+<div class="w3-row-padding">
+    <div class="w3-third">
+        <h2>Best Professors</h2>
+        <p>{{rank|safe}}</p>
+    </div>
 
-<profrankcol>
-  <h2>Best Professors</h2>
-  <p>{{rank|safe}}</p>
-</profrankcol>
+    <div class="w3-third">
+        <h2>Time Commitment</h2>
+        <h3>{{hours}} hours per week</h3>
+        <p>{{time_statement}}</p>
+    </div>
 
-<timecommitcol>
-  <h2>Time Commitment</h2>
-  <h3>{{hours}} hours per week</h3>
-  <p>{{time_statement}}</p>
-</timecommitcol>
-
-<gradeexpectedcol>
-  <h2>Expected Grade</h2>
-  <h3>{{expected_grade}}</h3>
-  <p>{{grade_statement}}</p>
-</gradeexpectedcol>
+    <div class="w3-third">
+        <h2>Expected Grade</h2>
+        <h3>{{expected_grade}}</h3>
+        <p>{{grade_statement}}</p>
+    </div>
 
 </div>
 
