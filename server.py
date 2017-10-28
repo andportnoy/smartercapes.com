@@ -17,6 +17,29 @@ courses = sorted(ranking.keys())
 url_dict = {i: '/' + '/'.join(i.lower().split(' ')) for i in courses} 
 print('url_dict loaded')
 
+# build a W3 CSS panel corresponding to the type of statement (relax/norm/warn)
+def build_panel(code, dictionary):
+    color = dictionary[code]['color']
+    if color == 'red':
+        panel_class = 'w3-container w3-pale-red w3-leftbar w3-border-red'
+    elif color == 'green':
+        panel_class = 'w3-container w3-pale-green w3-leftbar w3-border-green'
+    else: 
+        panel_class = 'w3-container w3-light-gray w3-leftbar w3-border-gray'
+
+    panel = '<div class="' + panel_class + '">' 
+            + '<h3>' + dictionary[code]['expected'] + '</h3>'
+            + '<p>' + dictionary[code]['statement'] + '</p>'
+            + '</div>'
+
+    return panel
+
+def build_time_panel(code):
+    return build_panel(code, time)
+
+def build_grade_panel(code):
+    return build_panel(code, grade)
+            
 @app.route("/")
 def hello():
     return render_template("home.html", url_dict=url_dict)
@@ -26,19 +49,15 @@ def welcome(dept, course):
     code = (dept + ' ' + course).upper()
     try:
         rank = ranking[code]
-        hours = time[code]['time']
-        time_color = time[code]['color']
-        time_statement = time[code]['statement']
         
-        expected_grade = grade[code]['expected_letter_grade']
-        grade_color = grade[code]['color']
-        grade_statement = grade[code]['statement']
+        time_panel = build_time_panel(code)
+        grade_panel = build_grade_panel(code)
+        
     except KeyError:
         return render_template('nodata.html', code=code)
 
-    return render_template("report.html", url_dict=url_dict, code=code, rank=rank,
-        hours=hours, time_color=time_color, time_statement=time_statement,
-        expected_grade=expected_grade, grade_color=grade_color, grade_statement=grade_statement)
+    return render_template("report.html", url_dict=url_dict, code=code,
+                           time_panel=time_panel, grade_panel=grade_panel)
 
 port = int(os.environ.get("PORT", 5000))
 app.run(host='0.0.0.0', port=port)
