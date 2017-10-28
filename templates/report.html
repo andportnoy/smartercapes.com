@@ -9,13 +9,16 @@
    <h1>{{code}}</h1>
 </div>
 
-<h2>Choose a different course:</h2>
-<select onchange="location = this.options[this.selectedIndex].value;">
-    <option>Select...</option>
-    {% for course in url_dict %}
-        <option value="{{url_dict[course]}}">{{course}}</option>
-    {% endfor %}
-</select>
+<div class="w3-container">
+    <h2>Choose a different course:</h2>
+    <select onchange="location = this.options[this.selectedIndex].value;">
+        <option>Select...</option>
+        {% for course in url_dict %}
+            <option value="{{url_dict[course]}}">{{course}}</option>
+        {% endfor %}
+    </select>
+</div>
+
 <div class="w3-row-padding">
     <div class="w3-third">
         <h2>Best Professors</h2>
