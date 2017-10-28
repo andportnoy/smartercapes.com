@@ -27,10 +27,10 @@ def build_panel(code, dictionary):
     else: 
         panel_class = 'w3-container w3-light-gray w3-leftbar w3-border-gray'
 
-    panel = '<div class="' + panel_class + '">' 
-            + '<h3>' + dictionary[code]['expected'] + '</h3>'
-            + '<p>' + dictionary[code]['statement'] + '</p>'
-            + '</div>'
+    panel = '<div class="' + panel_class + '">' +
+            '<h3>' + dictionary[code]['expected'] + '</h3>' +
+            '<p>' + dictionary[code]['statement'] + '</p>' +
+            '</div>'
 
     return panel
 
