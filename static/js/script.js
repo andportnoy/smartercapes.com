@@ -7,5 +7,4 @@ function buildSelect2(value1) {
     } else {
         select2.disabled = false;
     }
-    */
 }
