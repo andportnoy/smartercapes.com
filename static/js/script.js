@@ -4,7 +4,7 @@ var button = document.getElementById("button");
 function buildSelect2(dept) {
     resetSelect2();
     if (dept == "default") {
-        updateButton(dept);
+        button.disabled = true;
         select2.disabled = true;
     } else {
         courses = dict[dept]; 
@@ -22,8 +22,6 @@ function buildSelect2(dept) {
     }
 }
 function resetSelect2() {
-    // get reference to the second dropdown
-    
     // reset dropdown to default state (one "Courses..." option)
     select2.options.length = 0;
     var default_option = document.createElement("option");
@@ -31,15 +29,7 @@ function resetSelect2() {
     default_option.value = "default"
     select2.options.add(default_option);
 }
-function updateButton(select2Value) {
-    if (select2Value == "default") {
-        button.disabled = true;
-    } else {
-        button.disabled = false;
-    }
-    
-}
 
 function getSelectedUrl() {
-    return select2 
+    return select2.options[select2.selectedIndex].value;
 }
