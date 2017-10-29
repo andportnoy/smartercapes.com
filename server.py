@@ -45,7 +45,7 @@ def build_grade_panel(code):
             
 @app.route("/")
 def hello():
-    return render_template("home.html", url_dict=url_dict)
+    return render_template("home.html", depts=depts)
 
 @app.route("/<dept>/<course>")
 def welcome(dept, course):
