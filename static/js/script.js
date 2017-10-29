@@ -18,4 +18,3 @@ function buildSelect2(dept) {
     }
 }
 
-function updateButton(course)
