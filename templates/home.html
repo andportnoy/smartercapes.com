@@ -4,6 +4,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../static/css/w3.css">
 
+<style>
+    select {
+        display: inline-block;
+        vertical-align: middle;
+    }
+</style>
+
+<body>
+
+<div class="w3-container w3-light-gray w3-center">
+   <h1>{{code}}</h1>
+</div>
 <body>
 
     <div class="w3-container w3-light-gray w3-center">
@@ -11,17 +23,17 @@
     </div>
 
     <div class="w3-container w3-center">
-        <h2>1. Select department:</h2>
+        <h2>Select department:
         <select onchange="buildSelect2()">
             <option>Departments...</option>
             {% for dept in depts %}
                 <option value="{{dept}}">{{dept}}</option>
             {% endfor %}
         </select>
-        <h2>2. Select course:</h2>
+        and course:
         <select onchange="updateButton()">
             <option>Courses...</option>
-        </select>
+        </select></h2>
         <button disabled type="button">Get report</button>
     </div>
 
