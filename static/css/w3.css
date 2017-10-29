@@ -1,4 +1,5 @@
 ﻿/* W3.CSS 4.05 October 2017 by Jan Egil and Borge Refsnes */
+/* See comment and modification on lines 15 and 16 */
 html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
 /* Extract from normalize.css by Nicolas Gallagher and Jonathan Neal git.io/normalize */
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
@@ -11,7 +12,8 @@ dfn{font-style:italic}mark{background:#ff0;color:#000}
 small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
 sub{bottom:-0.25em}sup{top:-0.5em}figure{margin:1em 40px}img{border-style:none}svg:not(:root){overflow:hidden}
 code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}hr{box-sizing:content-box;height:0;overflow:visible}
-button,input,select,textarea{font:inherit;margin:0}optgroup{font-weight:bold}
+/* removed button from the next line to preserve initial style */
+input,select,textarea{font:inherit;margin:0}optgroup{font-weight:bold}
 button,input{overflow:visible}button,select{text-transform:none}
 button,html [type=button],[type=reset],[type=submit]{-webkit-appearance:button}
 button::-moz-focus-inner, [type=button]::-moz-focus-inner, [type=reset]::-moz-focus-inner, [type=submit]::-moz-focus-inner{border-style:none;padding:0}
