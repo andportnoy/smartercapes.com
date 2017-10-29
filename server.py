@@ -15,6 +15,8 @@ print('json loaded')
 
 # load the course and build a dictionary of the form d: 'ECE 35' -> 'ece/35'
 courses = natsorted(ranking.keys())
+depts = sorted(set(item.split(' ')[0] for item in courses))
+
 url_dict = {i: '/' + '/'.join(i.lower().split(' ')) for i in courses} 
 print('url_dict loaded')
 
