@@ -59,7 +59,7 @@ def welcome(dept, course):
     except KeyError:
         return render_template('nodata.html', code=code)
 
-    return render_template("report.html", url_dict=url_dict, 
+    return render_template("report.html", depts=depts, url_dict=url_dict, 
                            code=code, rank=rank, time_panel=time_panel, 
                            grade_panel=grade_panel)
 
