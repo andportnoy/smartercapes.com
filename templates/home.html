@@ -27,7 +27,7 @@
             {% endfor %}
         </select>
         and course:
-        <select id="select2" disabled onchange="updateButton()">
+        <select id="select2" disabled onchange="updateButton(this.options[this.selectedIndex].value)">
             <option>Courses...</option>
         </select></h2>
         <button disabled type="button">Get report</button>

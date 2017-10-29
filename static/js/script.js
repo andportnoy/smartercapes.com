@@ -30,3 +30,12 @@ function resetSelect2() {
     default_option.value = "default"
     select2.options.add(default_option);
 }
+function updateButton(select2Value) {
+    var button = document.getElementById("button");
+    if (select2Value == "default") {
+        button.disabled = true;
+    } else {
+        button.disabled = false;
+    }
+    
+}
