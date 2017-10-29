@@ -11,13 +11,24 @@
     </div>
 
     <div class="w3-container w3-center">
-        <h2>Select department:</h2>
-        <select onchange="location = this.options[this.selectedIndex].value;">
-            <option>Select...</option>
+        <h2>1. Select department:</h2>
+        <select onchange="buildSelect2()">
+            <option>Departments...</option>
             {% for dept in depts %}
                 <option value="{{dept}}">{{dept}}</option>
             {% endfor %}
         </select>
+        <h2>2. Select course:</h2>
+        <select onchange="updateButton()">
+            <option>Courses...</option>
+        </select>
+        <button disabled type="button">Get report</button>
+    </div>
+
+    </div>
+
+</body>
+</html>
     </div>
 
     </div>
