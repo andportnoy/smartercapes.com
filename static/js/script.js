@@ -10,8 +10,9 @@ function buildSelect2(dept) {
         courses = dict[dept]; 
         for (var i = 0; i < courses.length; i++) {
             var courseNumber = courses[i];
-            var option =  document.createElement("option")
-            option.setAttribute("value", courseNumber);
+            var option = document.createElement("option")
+            var value = "/" + dept + "/" + courseNumber; 
+            option.setAttribute("value", value);
             var text = document.createTextNode(courseNumber);
             option.appendChild(text);
 
