@@ -31,3 +31,11 @@ function resetSelect2() {
     select2.options.add(default_option);
 }
 
+function updateButton(select2Value) {
+    var button = document.getElementById("button");
+    if (select2Value == "default") {
+        button.disabled = true;
+    } else {
+        button.disabled = false;
+    }
+}
