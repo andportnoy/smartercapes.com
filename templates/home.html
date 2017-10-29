@@ -19,20 +19,18 @@
     </div>
 
     <div class="w3-container w3-center">
-        <div class="w3-display-middle>
-            <h2>Select department:
-            <select onchange="buildSelect2(this.options[this.selectedIndex].value)">
-                <option value="default">Departments...</option>
-                {% for dept in depts %}
-                    <option value="{{dept}}">{{dept}}</option>
-                {% endfor %}
-            </select>
-            and course:
-            <select id="select2" disabled onchange="updateButton(this.options[this.selectedIndex].value)">
-                <option>Courses...</option>
-            </select>
-            <button id="button" onclick="location = select2.options[select2.selectedIndex].value" disabled>Get report</button></h2>
-        </div>
+        <h2>Select department:
+        <select onchange="buildSelect2(this.options[this.selectedIndex].value)">
+            <option value="default">Departments...</option>
+            {% for dept in depts %}
+                <option value="{{dept}}">{{dept}}</option>
+            {% endfor %}
+        </select>
+        and course:
+        <select id="select2" disabled onchange="updateButton(this.options[this.selectedIndex].value)">
+            <option>Courses...</option>
+        </select>
+        <button id="button" onclick="location = select2.options[select2.selectedIndex].value" disabled>Get report</button></h2>
     </div>
 
 </body>
