@@ -24,7 +24,7 @@ function resetSelect2() {
     var select2 = document.getElementById("select2");
     
     // reset dropdown to default state (one "Courses..." option)
-    select2.options=[];
+    select2.options.length = 0;
     var default_option = document.createElement("option");
     default_option.text = "Courses..."
     default_option.value = "default"
