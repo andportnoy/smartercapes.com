@@ -4,6 +4,7 @@ function buildSelect2(dept) {
     var select2 = document.getElementById("select2");
     resetSelect2();
     if (dept == "default") {
+        updateButton(dept);
         select2.disabled = true;
     } else {
         courses = dict[dept]; 
