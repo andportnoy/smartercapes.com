@@ -5,11 +5,11 @@ from natsort import natsorted # natural sorting module
 app = Flask(__name__)
 
 # load our data dictionaries
-with open('ranking.json') as f:
+with open('static/data/ranking.json') as f:
     ranking = json.load(f)
-with open('time.json') as f:
+with open('static/data/time.json') as f:
     time = json.load(f)
-with open('grade.json') as f:
+with open('static/data/grade.json') as f:
     grade = json.load(f)
 print('json loaded')
 
