@@ -13,7 +13,7 @@
         vertical-align: middle;
     }
 </style>
-<body>
+<body onpageshow="buildSelect2(select1.options[select1.selectedIndex].value, {{depts_and_courses}})">
 
 <div class="w3-container w3-light-gray w3-center">
    <h1>{{code}}</h1>
@@ -32,7 +32,7 @@
             {% endfor %}
         </select>
         and course:
-        <select id="select2" onfocus="buildSelect2(select1.options[select1.selectedIndex].value, {{depts_and_courses}})" onchange="updateButton(this.options[this.selectedIndex].value)">
+        <select id="select2" onchange="updateButton(this.options[this.selectedIndex].value)">
             <option value="defaule">Courses...</option>
             {}
         </select>
