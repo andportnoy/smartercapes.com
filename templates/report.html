@@ -18,7 +18,7 @@
 
 <div class="w3-container w3-center">
 <h3>Select a different department:
-        <select id="select1" onchange="buildSelect2(this.options[this.selectedIndex].value)">
+        <select id="select1" onchange="buildSelect2(this.options[this.selectedIndex].value, {{depts_and_courses}})">
             <option value="default">Departments...</option>
             {% for dept in depts %}
                 {% if dept == lastDept %}
@@ -29,8 +29,9 @@
             {% endfor %}
         </select>
         and course:
-        <select id="select2" onfocus="buildSelect2(select1.options[select1.selectedIndex].value)" onchange="updateButton(this.options[this.selectedIndex].value)">
-            <option>Courses...</option>
+        <select id="select2" onfocus="buildSelect2(select1.options[select1.selectedIndex].value, {{depts_and_courses}})" onchange="updateButton(this.options[this.selectedIndex].value)">
+            <option value="defaule">Courses...</option>
+            {}
         </select>
         <button id="button" onclick="location =
         select2.options[select2.selectedIndex].value" disabled

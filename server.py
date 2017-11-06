@@ -11,6 +11,8 @@ with open('static/data/time.json') as f:
     time = json.load(f)
 with open('static/data/grade.json') as f:
     grade = json.load(f)
+with open('static/data/depts_and_courses.json') as f:
+    depts_and_courses = json.load(f)
 print('json loaded')
 
 # load the course and build a dictionary of the form d: 'ECE 35' -> 'ece/35'
@@ -45,7 +47,8 @@ def build_grade_panel(code):
 
 @app.route("/")
 def hello():
-    return render_template("home.html", depts=depts)
+    return render_template("home.html", depts=depts,
+                            depts_and_courses=depts_and_courses)
 
 @app.route("/<dept>/<course>")
 def welcome(dept, course):
@@ -61,7 +64,8 @@ def welcome(dept, course):
 
     return render_template("report.html", depts=depts, url_dict=url_dict,
                            code=code, rank=rank, time_panel=time_panel,
-                           grade_panel=grade_panel, lastDept=dept)
+                           grade_panel=grade_panel, lastDept=dept,
+                           lastCourse=course, depts_and_courses=depts_and_courses)
 
 port = int(os.environ.get("PORT", 5000))
 app.run(host='0.0.0.0', port=port)
