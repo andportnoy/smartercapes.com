@@ -29,7 +29,7 @@
             {% endfor %}
         </select>
         and course:
-        <select id="select2" disabled onchange="updateButton(this.options[this.selectedIndex].value)">
+        <select id="select2" onfocus="buildSelect2(select1.options[select1.selectedIndex].value)" onchange="updateButton(this.options[this.selectedIndex].value)">
             <option>Courses...</option>
         </select>
         <button id="button" onclick="location =
