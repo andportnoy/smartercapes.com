@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <title>{{code}}</title>
+</head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../static/css/w3.css">
 <script type="text/javascript" src="../static/js/script.js"></script>
@@ -13,7 +16,7 @@
         font-size: 13px;
     }
 </style>
-<body>
+<body onpageshow="buildSelect2(select1.options[select1.selectedIndex].value, {{depts_and_courses}})">
 
 <div class="w3-container w3-light-gray w3-center">
    <h1>{{code}}</h1>
@@ -21,15 +24,20 @@
 
 <div class="w3-container w3-center">
 <h3>Select a different department:
-        <select onchange="buildSelect2(this.options[this.selectedIndex].value)">
+        <select id="select1" onchange="buildSelect2(this.options[this.selectedIndex].value, {{depts_and_courses}})">
             <option value="default">Departments...</option>
             {% for dept in depts %}
-                <option value="{{dept}}">{{dept}}</option>
+                {% if dept == lastDept %}
+                  <option selected value="{{dept}}">{{dept}}</option>
+                {% else %}
+                  <option value="{{dept}}">{{dept}}</option>
+                {% endif %}
             {% endfor %}
         </select>
         and course:
-        <select id="select2" disabled onchange="updateButton(this.options[this.selectedIndex].value)">
-            <option>Courses...</option>
+        <select id="select2" onchange="updateButton(this.options[this.selectedIndex].value)">
+            <option value="default">Courses...</option>
+            {}
         </select>
         <button id="button" onclick="location =
         select2.options[select2.selectedIndex].value" disabled
