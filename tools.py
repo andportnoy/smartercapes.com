@@ -13,19 +13,20 @@ def get_raw_cape_dataframe():
 
     # get the page that lists all the data (%2C is the comma, drops all the data since every professor name has it)
     driver.get('https://cape.ucsd.edu/responses/Results.aspx?Name=%2C')
-    print('Page loaded, saving HTML to disk as cape.html...')
+    print('Page loaded, parsing dataset with pandas...')
 
     # save the page as html
-    with open('cape.html', 'w') as f:
-        f.write(driver.page_source)
-    print('Dataset saved to disk, parsing dataset...')
+    # with open('cape.html', 'w') as f:
+    #     f.write(driver.page_source)
+    # print('Dataset saved to disk, parsing dataset...')
+
+
+    # read in the dataset from the html file
+    df = pd.read_html(driver.page_source)[0]
+    print('Dataset parsed, closing browser window.')
 
     # destroy driver instance
     driver.quit()
-
-    # read in the dataset from the html file
-    df = pd.read_html('cape.html')[0]
-    print('Dataset parsed.')
 
     return df
 
