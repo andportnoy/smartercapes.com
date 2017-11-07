@@ -40,7 +40,11 @@
     <div class="w3-third">
         <h2>Best professors</h2>
         <div class="w3-container w3-light-gray w3-leftbar w3-border-gray">
-            {{rank|safe}}
+            <ol>
+            {% for professor in rank %}
+                <li>{{professor}}</li>
+            {% endfor %}
+            </ol>
         </div>
     </div>
 

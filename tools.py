@@ -15,12 +15,6 @@ def get_raw_cape_dataframe():
     driver.get('https://cape.ucsd.edu/responses/Results.aspx?Name=%2C')
     print('Page loaded, parsing dataset with pandas...')
 
-    # save the page as html
-    # with open('cape.html', 'w') as f:
-    #     f.write(driver.page_source)
-    # print('Dataset saved to disk, parsing dataset...')
-
-
     # read in the dataset from the html file
     df = pd.read_html(driver.page_source)[0]
     print('Dataset parsed, closing browser window.')
@@ -87,33 +81,20 @@ def get_clean_cape_dataframe(raw_cape_dataframe):
     
     return df
 
-def get_prof_ranking_dictionary(df):
-    
+def get_prof_ranking_dictionary(df):                                               
     
     df = (df[['instr', 'course', 'evals', 'instr_weighted_evals']])
 
     gb = df.groupby(['course', 'instr']).sum()
 
     gb.loc[:, 'lower'], gb.loc[:, 'upper'] = ci(gb.instr_weighted_evals, gb.evals, method='wilson')
-
-    # return an ordered list of professors
-    def rankProf(gb, name):
-        gb = gb.loc[name]
-        return list(gb.sort_values(by='lower', ascending=False).index)
-
-    # build an html ordered list row
-    def ol_row(value):
-        return '<li>' + value + '</li>'
-
-    # build an html ordered list
-    def ol(values):
-        return '<ol>' + ''.join([ol_row(value) for value in values]) +  '</ol>'
     
     # populate the dictionary
     ranking = {}
     for course, instr in gb.index:
-        ranking[course] = ol(rankProf(gb, course))
-        
+        professors_sorted = gb.loc[course].sort_values(by='lower', ascending=False)
+        ranking[course] = list(professors_sorted.index)
+
     return ranking
 
 def get_time_dictionary(df):
