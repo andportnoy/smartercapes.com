@@ -1,5 +1,12 @@
 # ignore Vim swap files
 *.swp
+
 # ignore python cache files
 __pycache__
+
+# ignore Jupyter checkpoint folder
+.ipynb_checkpoints/
+
+# ignore selenium webdriver log files
+geckodriver.log
 
