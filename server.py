@@ -13,14 +13,12 @@ with open('static/data/grade.json') as f:
     grade = json.load(f)
 with open('static/data/depts_and_courses.json') as f:
     depts_and_courses = json.load(f)
-print('json loaded')
 
 # load the course and build a dictionary of the form d: 'ECE 35' -> 'ece/35'
 courses = natsorted(ranking.keys())
 depts = sorted(set(item.split(' ')[0] for item in courses))
 
 url_dict = {i: '/' + '/'.join(i.lower().split(' ')) for i in courses}
-print('url_dict loaded')
 
 # build a W3 CSS panel corresponding to the type of statement (relax/norm/warn)
 def build_panel(code, dictionary):
