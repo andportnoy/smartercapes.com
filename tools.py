@@ -24,13 +24,12 @@ def get_raw_cape_dataframe():
 
     return df
 
-def get_clean_cape_dataframe(raw_cape_dataframe):
+def get_clean_cape_dataframe(raw_cape_dataframe, terms):
     
     df = raw_cape_dataframe
     
     # only looking at evaluations from 15/16 and 16/17
-    df = df[df.Term.isin(['S317', 'S217', 'S117', 'SP17', 'WI17', 'FA16',
-                         'S316', 'S216', 'S116', 'SP16', 'WI16', 'FA15'])]
+    df = df[df.Term.isin(terms)]
 
     # subset the columns we need
     df = df[['Instructor', 'Course', 'Term', 'Evals Made', 'Rcmnd Class',
