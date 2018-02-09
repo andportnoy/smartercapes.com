@@ -23,8 +23,8 @@
    <h1>{{code}}</h1>
 </div>
 
-<div class="w3-container w3-center">
-<h3>Select a different department:
+<div class="w3-container w3-center w3-margin-top w3-margin-bottom">
+    <h3>Select a different department:<br>
         <select id="select1" onchange="buildSelect2(this.options[this.selectedIndex].value, {{depts_and_courses}})">
             <option value="default">Departments...</option>
             {% for dept in depts %}
@@ -34,12 +34,12 @@
                   <option value="{{dept}}">{{dept}}</option>
                 {% endif %}
             {% endfor %}
-        </select>
-        and course:
+        </select><br>
+        and course:<br>
         <select id="select2" onchange="updateButton(this.options[this.selectedIndex].value)">
             <option value="default">Courses...</option>
             {}
-        </select>
+        </select><br>
         <button id="button" onclick="location =
         select2.options[select2.selectedIndex].value" disabled
         type="button">Get report</button></h3>
