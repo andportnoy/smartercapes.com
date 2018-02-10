@@ -21,7 +21,7 @@ depts = sorted(set(item.split(' ')[0] for item in courses))
 url_dict = {i: '/' + '/'.join(i.lower().split(' ')) for i in courses}
 
 # build a W3 CSS panel corresponding to the type of statement (relax/norm/warn)
-def build_panel(code, dictionary):
+def build_panel(code, dictionary, time_panel=False):
     color = dictionary[code]['color']
     if color == 'red':
         panel_class = 'w3-container w3-pale-red w3-leftbar w3-border-red'
@@ -30,15 +30,20 @@ def build_panel(code, dictionary):
     else:
         panel_class = 'w3-container w3-light-gray w3-leftbar w3-border-gray'
 
+    if time_panel:
+        hrs_per_week = ' hrs/week'
+    else:
+        hrs_per_week = ''
+
     panel = '<div class="' + panel_class + '">' + \
-            '<h3>' + dictionary[code]['expected'] + '</h3>' + \
+            '<h3>' + dictionary[code]['expected'] + hrs_per_week + '</h3>' + \
             '<p>' + dictionary[code]['statement'] + '</p>' + \
             '</div>'
 
     return panel
 
 def build_time_panel(code):
-    return build_panel(code, time)
+    return build_panel(code, time, time_panel=True)
 
 def build_grade_panel(code):
     return build_panel(code, grade)
