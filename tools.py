@@ -1,17 +1,18 @@
-import requests
 from selenium import webdriver
 import pandas as pd
 from statsmodels.stats.proportion import proportion_confint as ci
 from natsort import natsorted
 
+
 def get_raw_cape_dataframe():
 
-    # launch browser using Selenium, need to have Firefox installed, change to Chrome if needed.
+    # launch browser using Selenium, need to have Firefox installed
     print('Opening a browser window...')
     driver = webdriver.Firefox()
     print('Browser window open, loading the page...')
 
-    # get the page that lists all the data (%2C is the comma, drops all the data since every professor name has it)
+    # get the page that lists all the data
+    # (%2C is the comma, drops all the data since every professor name has it)
     driver.get('https://cape.ucsd.edu/responses/Results.aspx?Name=%2C')
     print('Page loaded, parsing dataset with pandas...')
 
@@ -24,52 +25,59 @@ def get_raw_cape_dataframe():
 
     return df
 
+
 def get_clean_cape_dataframe(raw_cape_dataframe, terms):
-    
+
     df = raw_cape_dataframe
-    
+
     # only looking at evaluations from 15/16 and 16/17
     df = df[df.Term.isin(terms)]
 
     # subset the columns we need
     df = df[['Instructor', 'Course', 'Term', 'Evals Made', 'Rcmnd Class',
-           'Rcmnd Instr', 'Study Hrs/wk', 'Avg Grade Expected',
-           'Avg Grade Received']]
+             'Rcmnd Instr', 'Study Hrs/wk', 'Avg Grade Expected',
+             'Avg Grade Received']]
 
     # rename the columns for convenience
     df = df.rename(columns={
-        'Instructor':'instr', 'Course': 'course', 'Term': 'term', 
-        'Evals Made': 'evals', 'Rcmnd Class': 'rcmnd_class', 
-        'Rcmnd Instr': 'rcmnd_instr', 'Study Hrs/wk': 'time', 
-        'Avg Grade Expected': 'grade_expected', 'Avg Grade Received': 'grade_actual'
+        'Instructor': 'instr', 'Course': 'course', 'Term': 'term',
+        'Evals Made': 'evals', 'Rcmnd Class': 'rcmnd_class',
+        'Rcmnd Instr': 'rcmnd_instr', 'Study Hrs/wk': 'time',
+        'Avg Grade Expected': 'grade_expected',
+        'Avg Grade Received': 'grade_actual'
     })
-    
+
     # drop rows that have data missing
     df = df.dropna()
-    
+
     # only need the courses which hade at least one evaluation made
     df = df[df['evals'] != 0]
 
     # split to get the dept + course code
-    df.loc[:, 'course'] = df.course.str.split(' - ').apply(lambda x : x[0])
+    df.loc[:, 'course'] = df.course.str.split(' - ').apply(lambda x: x[0])
 
-    # convert the recommendation percentages to float values and resize to be in the interval [0, 1]:
-    df.loc[:, 'rcmnd_instr'] = df.rcmnd_instr.str.rstrip(' %').astype('float') / 100
-    df.loc[:, 'rcmnd_class'] = df.rcmnd_class.str.rstrip(' %').astype('float') / 100
+    # convert the recommendation percentages to float values
+    # and resize to be in the interval [0, 1]:
+    df.loc[:, 'rcmnd_instr'] = (df.rcmnd_instr
+                                  .str.rstrip(' %')
+                                  .astype('float')) / 100
 
+    df.loc[:, 'rcmnd_class'] = (df.rcmnd_class
+                                  .str.rstrip(' %')
+                                  .astype('float')) / 100
 
-    """We create a "weighted evals" column which contains the recommendation percentage 
-    multiplied by the number of evals, yielding the approximate number of positive 
-    recommendations. We round them to obtain integer values. The exact numbers are
-    available for every course, but it would require scraping a lot of pages. 
-    Maybe in the next iteration."""
+    """We create a "weighted evals" column which contains the recommendation
+    percentage multiplied by the number of evals, yielding the approximate
+    number of positive recommendations. We round them to obtain integer values.
+    The exact numbers are available for every course, but it would require
+    scraping a lot of pages.  Maybe in the next iteration."""
 
     df.loc[:, 'class_weighted_evals'] = (df.evals * df.rcmnd_class).round().astype('int')
     df.loc[:, 'instr_weighted_evals'] = (df.evals * df.rcmnd_instr).round().astype('int')
 
     df.loc[:, 'letter_expected'] = df.grade_expected.str.split('(').apply(lambda x: x[0])
     df.loc[:, 'gpa_expected'] = df.grade_expected.str.split('(').apply(lambda x: x[-1]).str.rstrip(')').astype('float')
-    
+
     df.loc[:, 'letter_actual'] = df.grade_actual.str.split('(').apply(lambda x: x[0])
     df.loc[:, 'gpa_actual'] = df.grade_actual.str.split('(').apply(lambda x: x[-1]).str.rstrip(')').astype('float')
 
@@ -77,17 +85,17 @@ def get_clean_cape_dataframe(raw_cape_dataframe, terms):
 
     # set and reset index to build an incremental index that starts at 0
     df = df.set_index('instr').reset_index()
-    
+
     return df
 
-def get_prof_ranking_dictionary(df):                                               
-    
+def get_prof_ranking_dictionary(df):
+
     df = (df[['instr', 'course', 'evals', 'instr_weighted_evals']])
 
     gb = df.groupby(['course', 'instr']).sum()
 
     gb.loc[:, 'lower'], gb.loc[:, 'upper'] = ci(gb.instr_weighted_evals, gb.evals, method='wilson')
-    
+
     # populate the dictionary
     ranking = {}
     for course, instr in gb.index:
@@ -97,16 +105,16 @@ def get_prof_ranking_dictionary(df):
     return ranking
 
 def get_time_dictionary(df):
-    
+
     # subset the columns we need
     df = df[['course', 'time']]
-    
+
     # groupby to get average time for course and round to 2 decimal places
     gb = df[['time', 'course']].groupby('course').mean().round(2)
 
     # average time spent for all courses
     average = float(gb.mean())
-    
+
     # standard deviation of time spent for all courses
     sd = float(gb.std())
 
@@ -123,7 +131,7 @@ def get_time_dictionary(df):
             statement = warning
             color = 'red'
         elif (abs(dev) < sd):
-            statement = normal 
+            statement = normal
             color = 'black'
         else:
             statement = relax
@@ -138,19 +146,19 @@ def get_time_dictionary(df):
     return time
 
 def get_grade_dictionary(df):
-    
+
     # subset the columns we need
     df = df[['course', 'gpa_expected', 'gpa_actual']]
 
     # groupby to get the mean grade and round to 2 decimal places
     gb = df.groupby('course').mean().round(2)
-    gb['dev'] = gb.gpa_actual - gb.gpa_expected 
+    gb['dev'] = gb.gpa_actual - gb.gpa_expected
 
     # warning statements
     warning = 'Warning: students tend to get lower grades than they expect for this course.'
     normal = 'You will likely get the grade that you expect to get for this course.'
     relax = 'Relax: students tend to get higher grades than they expect for this course.'
-    
+
     def GPA_val_to_grade(val):
         if val == 4.0:
             grade = 'A'
@@ -171,7 +179,7 @@ def get_grade_dictionary(df):
         elif val >= 1.0:
             grade = 'D'
         return grade
-    
+
     def get_statement_and_color(dev):
         if dev > 0.4:
             color = 'green'
