@@ -72,14 +72,22 @@ def get_clean_cape_dataframe(raw_cape_dataframe, terms):
     The exact numbers are available for every course, but it would require
     scraping a lot of pages.  Maybe in the next iteration."""
 
-    df.loc[:, 'class_weighted_evals'] = (df.evals * df.rcmnd_class).round().astype('int')
-    df.loc[:, 'instr_weighted_evals'] = (df.evals * df.rcmnd_instr).round().astype('int')
+    df.class_weighted_evals = (df.evals * df.rcmnd_class).round().astype('int')
+    df.instr_weighted_evals = (df.evals * df.rcmnd_instr).round().astype('int')
 
-    df.loc[:, 'letter_expected'] = df.grade_expected.str.split('(').apply(lambda x: x[0])
-    df.loc[:, 'gpa_expected'] = df.grade_expected.str.split('(').apply(lambda x: x[-1]).str.rstrip(')').astype('float')
+    df.letter_expected = (df.grade_expected.str.split('(')
+                                           .apply(lambda x: x[0]))
+    df.gpa_expected = (df.grade_expected.str.split('(')
+                                        .apply(lambda x: x[-1])
+                                        .str.rstrip(')')
+                                        .astype('float'))
 
-    df.loc[:, 'letter_actual'] = df.grade_actual.str.split('(').apply(lambda x: x[0])
-    df.loc[:, 'gpa_actual'] = df.grade_actual.str.split('(').apply(lambda x: x[-1]).str.rstrip(')').astype('float')
+    df.letter_actual = (df.grade_actual.str.split('(')
+                                       .apply(lambda x: x[0]))
+    df.gpa_actual = (df.grade_actual.str.split('(')
+                                    .apply(lambda x: x[-1])
+                                    .str.rstrip(')')
+                                    .astype('float'))
 
     df = df.drop(['grade_expected', 'grade_actual'], axis=1)
 
@@ -88,21 +96,25 @@ def get_clean_cape_dataframe(raw_cape_dataframe, terms):
 
     return df
 
+
 def get_prof_ranking_dictionary(df):
 
     df = (df[['instr', 'course', 'evals', 'instr_weighted_evals']])
 
     gb = df.groupby(['course', 'instr']).sum()
 
-    gb.loc[:, 'lower'], gb.loc[:, 'upper'] = ci(gb.instr_weighted_evals, gb.evals, method='wilson')
+    gb.loc[:, 'lower'], gb.loc[:, 'upper'] = ci(gb.instr_weighted_evals,
+                                                gb.evals, method='wilson')
 
     # populate the dictionary
     ranking = {}
     for course, instr in gb.index:
-        professors_sorted = gb.loc[course].sort_values(by='lower', ascending=False)
+        professors_sorted = gb.loc[course].sort_values(by='lower',
+                                                       ascending=False)
         ranking[course] = list(professors_sorted.index)
 
     return ranking
+
 
 def get_time_dictionary(df):
 
@@ -123,8 +135,10 @@ def get_time_dictionary(df):
 
     # warning statements
     warning = 'Warning: this course might take more time than average.'
-    normal = 'This course will take an average amount of time outside of class.'
-    relax = 'Relax: this course will probably require less time spent outside of class than average.'
+    normal = ('This course will take an average '
+              'amount of time outside of class.')
+    relax = ('Relax: this course will probably require less '
+             'time spent outside of class than average.')
 
     def get_statement_and_color(dev, sd):
         if (dev > sd):
@@ -141,9 +155,11 @@ def get_time_dictionary(df):
     time = {}
     for course in gb.index:
         statement, color = get_statement_and_color(gb.loc[course, 'dev'], sd)
-        time[course] = {'expected': str(float(gb.loc[course, 'time'])), 'statement': statement, 'color': color}
+        time[course] = {'expected': str(float(gb.loc[course, 'time'])),
+                        'statement': statement, 'color': color}
 
     return time
+
 
 def get_grade_dictionary(df):
 
@@ -155,9 +171,12 @@ def get_grade_dictionary(df):
     gb['dev'] = gb.gpa_actual - gb.gpa_expected
 
     # warning statements
-    warning = 'Warning: students tend to get lower grades than they expect for this course.'
-    normal = 'You will likely get the grade that you expect to get for this course.'
-    relax = 'Relax: students tend to get higher grades than they expect for this course.'
+    warning = ('Warning: students tend to get lower '
+               'grades than they expect for this course.')
+    normal = ('You will likely get the grade that '
+              'you expect to get for this course.')
+    relax = ('Relax: students tend to get higher '
+             'grades than they expect for this course.')
 
     def GPA_val_to_grade(val):
         if val == 4.0:
@@ -203,6 +222,7 @@ def get_grade_dictionary(df):
         }
 
     return grade
+
 
 def get_depts_and_courses_dictionary(df):
 
