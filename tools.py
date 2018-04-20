@@ -72,22 +72,24 @@ def get_clean_cape_dataframe(raw_cape_dataframe, terms):
     The exact numbers are available for every course, but it would require
     scraping a lot of pages.  Maybe in the next iteration."""
 
-    df.class_weighted_evals = (df.evals * df.rcmnd_class).round().astype('int')
-    df.instr_weighted_evals = (df.evals * df.rcmnd_instr).round().astype('int')
+    df['class_weighted_evals'] = ((df.evals * df.rcmnd_class).round()
+                                                             .astype('int'))
+    df['instr_weighted_evals'] = ((df.evals * df.rcmnd_instr).round()
+                                                             .astype('int'))
 
-    df.letter_expected = (df.grade_expected.str.split('(')
-                                           .apply(lambda x: x[0]))
-    df.gpa_expected = (df.grade_expected.str.split('(')
-                                        .apply(lambda x: x[-1])
-                                        .str.rstrip(')')
-                                        .astype('float'))
+    df['letter_expected'] = (df.grade_expected.str.split('(')
+                                              .apply(lambda x: x[0]))
+    df['gpa_expected'] = (df.grade_expected.str.split('(')
+                                           .apply(lambda x: x[-1])
+                                           .str.rstrip(')')
+                                           .astype('float'))
 
-    df.letter_actual = (df.grade_actual.str.split('(')
-                                       .apply(lambda x: x[0]))
-    df.gpa_actual = (df.grade_actual.str.split('(')
-                                    .apply(lambda x: x[-1])
-                                    .str.rstrip(')')
-                                    .astype('float'))
+    df['letter_actual'] = (df.grade_actual.str.split('(')
+                                          .apply(lambda x: x[0]))
+    df['gpa_actual'] = (df.grade_actual.str.split('(')
+                                       .apply(lambda x: x[-1])
+                                       .str.rstrip(')')
+                                       .astype('float'))
 
     df = df.drop(['grade_expected', 'grade_actual'], axis=1)
 
