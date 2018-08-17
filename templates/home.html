@@ -19,48 +19,16 @@
 </style>
 
 <body>
-    <div class="w3-container w3-light-gray w3-center">
-        <h1>Smarter CAPEs</h1>
-    </div>
-    <div class="w3-container w3-center w3-margin-top w3-margin-bottom">
-        <h2>Select department:
-            <select onchange="buildSelect2(this.options[this.selectedIndex].value, {{depts_and_courses}})">
-                <option value="default">Departments...</option>
-                {% for dept in depts %}
-                    <option value="{{dept}}">{{dept}}</option>
-                {% endfor %}
-            </select>
-            and course:
-            <select id="select2" disabled onchange="updateButton(this.options[this.selectedIndex].value)">
-                <option>Courses...</option>
-            </select>
-            <button id="button" onclick="location = select2.options[select2.selectedIndex].value" disabled>Get report</button>
-        </h2>
-    </div>
-    <footer class="w3-margin-bottom w3-content w3-mobile w3-padding" style="width:400px; text-align:
-            left;font-size:14px;">
         <div class="w3-card">
             <header class="w3-container w3-light-green" style="text-align: center;">
-                <h3>How everything works</h3>
+                <h3>We moved!</h3>
             </header>
             <div class="w3-container">
-                <p class="w3-text-light-green" style="font-size:16px;">
-                8/17/18: Updated with SP 18 and SS1 18 CAPEs and grades.</p>
-                <p>Professor rankings are based on the lower bounds of the 95% 
-                <a href="https://www.evanmiller.org/how-not-to-sort-by-average-rating.html">
-                Wilson score confidence intervals</a> 
-                for the recommendation rate of every professor that
-                taught a given course in the past two years, usually defined as 6 most recent full quarters and 2 most recent summer sessions (although right now it's Fall 15 through Summer I 18).</p>
-                <p>The threshold for time commitment warnings is one standard deviation
-                from the mean commitment for all courses.</p>
-                <p>The expected grade warning is given when the expected grade (based on
-                student surveys) is farther than 0.4 points from the actual average.</p>
+                <p class="w3-text-light-green" style="font-size:16px;text-align: center;">
+                The website is now available at 
+                <a href=http://smartercapes.com>smartercapes.com</a>
+                </p>
             </div>
         </div>
-        <p style="text-align: center;"><i>Please direct any suggestions/concerns you have to 
-            <b><a href="mailto:aportnoy@ucsd.edu">Andrey Portnoy</a></b>,<br>pull requests welcome on 
-        <b><a href="https://github.com/andportnoy/escapesd">GitHub</a></b></i></p>
-    </footer>
-
 </body>
 </html>
