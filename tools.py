@@ -1,7 +1,9 @@
-from selenium import webdriver
 import pandas as pd
-from statsmodels.stats.proportion import proportion_confint as ci
 from natsort import natsorted
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+from statsmodels.stats.proportion import proportion_confint as ci
 
 
 def get_raw_cape_dataframe():
@@ -13,6 +15,14 @@ def get_raw_cape_dataframe():
 
     # get the page that lists all the data
     # (%2C is the comma, drops all the data since every professor name has it)
+    driver.get('https://cape.ucsd.edu/responses/Results.aspx?Name=AndreyP')
+    print('Please enter credentials...')
+
+    # wait until SSO credentials are entered
+    wait = WebDriverWait(driver, 60)
+    element = wait.until(expected_conditions.title_contains('CAPE Results'))
+
+    # now that we are signed in, actually get all the data
     driver.get('https://cape.ucsd.edu/responses/Results.aspx?Name=%2C')
     print('Page loaded, parsing dataset with pandas...')
 
