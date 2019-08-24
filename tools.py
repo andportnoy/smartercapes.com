@@ -146,11 +146,15 @@ def get_time_dictionary(df):
     gb['dev'] = gb - average
 
     # warning statements
-    warning = 'Warning: this course might take more time than average.'
-    normal = ('This course will take an average '
-              'amount of time outside of class.')
-    relax = ('Relax: this course will probably require less '
-             'time spent outside of class than average.')
+    warning = (
+        'This course will take more time outside of class than average.'
+    )
+    normal = (
+        'This course will take an average amount of time outside of class.'
+    )
+    relax = (
+        'This course might take less time outside of class than average.'
+    )
 
     def get_statement_and_color(dev, sd):
         if (dev > sd):
@@ -183,12 +187,15 @@ def get_grade_dictionary(df):
     gb['dev'] = gb.gpa_actual - gb.gpa_expected
 
     # warning statements
-    warning = ('Warning: students tend to get lower '
-               'grades than they expect for this course.')
-    normal = ('You will likely get the grade that '
-              'you expect to get for this course.')
-    relax = ('Relax: students tend to get higher '
-             'grades than they expect for this course.')
+    warning = (
+        'Students tend to get lower grades than they expect for this course.'
+    )
+    normal = (
+        'Students tend to get the grade they expect for this course.'
+    )
+    relax = (
+        'Students tend to get higher grades than they expect for this course.'
+    )
 
     def GPA_val_to_grade(val):
         if val == 4.0:
