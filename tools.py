@@ -13,18 +13,17 @@ def get_raw_cape_dataframe():
     driver = webdriver.Firefox()
     print('Browser window open, loading the page...')
 
-    # get the page that lists all the data
-    # (%2C is the comma, drops all the data since every professor name has it)
-    driver.get('https://cape.ucsd.edu/responses/Results.aspx?Name=AndreyP')
+    # get the page that lists all the data, first try
+    driver.get('https://cape.ucsd.edu/responses/Results.aspx')
     print('Please enter credentials...')
 
     # wait until SSO credentials are entered
     wait = WebDriverWait(driver, 60)
     element = wait.until(expected_conditions.title_contains('CAPE Results'))
 
-    # now that we are signed in, actually get all the data
+    # get the page that lists all the data
+    # (%2C is the comma, drops all the data since every professor name has it)
     driver.get('https://cape.ucsd.edu/responses/Results.aspx?Name=%2C')
-    print('Page loaded, parsing dataset with pandas...')
 
     # read in the dataset from the html file
     df = pd.read_html(driver.page_source)[0]
